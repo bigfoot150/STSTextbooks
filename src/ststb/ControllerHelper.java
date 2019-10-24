@@ -1,5 +1,6 @@
 package ststb;
 
+import shared.ButtonMethod;
 import shared.HelperBase;
 import shared.HibernateHelper;
 
@@ -64,20 +65,53 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("sell/edit.jsp");
     }
 
-    //todo will use for implementation later
+
 //    @ButtonMethod(buttonName = "submitButton")
 //    public String submitMethod()
 //    {
 //        fillBeanFromRequest(data);
 //        if (!isValid(data))
-//            return jspLocation("task55.jsp");
+//            return jspLocation("sell/edit.jsp");
 //
 //        HibernateHelper.updateDB(data);
 //        java.util.List list = HibernateHelper.getListData(data.getClass());
 //        request.setAttribute("database", list);
-//        return jspLocation("task55Process.jsp");
-//        return jspLocation("task55.jsp");
+//        return jspLocation("sell/process.jsp");
+//
 //    }
+
+    @ButtonMethod(buttonName = "editButton", isDefault = true)
+    public String editMethod()
+    {
+        return jspLocation("sell/edit.jsp");
+    }
+
+    @ButtonMethod(buttonName = "confirmButton")
+    public String confirmMethod() {
+        fillBeanFromRequest(data);
+        //The next JSP address depends on the validity of the data.
+        String address;
+        if (isValid(data)) {
+            address = jspLocation("sell/confirm.jsp");
+        } else {
+            address = jspLocation("sell/edit.jsp");
+        }
+        return address;
+    }
+
+    @ButtonMethod(buttonName = "processButton")
+    public String processMethod()
+    {
+        if (!isValid(data)) {
+            return jspLocation("Expired.jsp");
+        }
+        HibernateHelper.updateDB(data);
+        java.util.List list =
+                HibernateHelper.getListData(data.getClass());
+        request.setAttribute("database", list);
+        return jspLocation("sell/process.jsp");
+    }
+
 
     @Override
     public void doGet() throws ServletException, java.io.IOException
@@ -86,7 +120,8 @@ public class ControllerHelper extends HelperBase {
         addHelperToSession("helper", SessionData.IGNORE);
 
         //Modify to test pages
-        String address = initialLoad();
+        //String address = initialLoad();
+        String address = editMethod();
 
         request.getRequestDispatcher(address).forward(request, response);
     }
