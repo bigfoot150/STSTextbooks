@@ -38,8 +38,8 @@ public class ControllerHelper extends HelperBase {
         //Replace the capitalized words with your database information.
         //The standard port for MySQL is 3306.
         props.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/ststb");
-        props.setProperty("hibernate.connection.username", "root");
-        props.setProperty("hibernate.connection.password", "Garsha123!");
+        props.setProperty("hibernate.connection.username", "username");
+        props.setProperty("hibernate.connection.password", "password");
 
         boolean create = Boolean.parseBoolean(servlet.getInitParameter("create"));
         if (create)
