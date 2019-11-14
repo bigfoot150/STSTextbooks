@@ -13,22 +13,21 @@
     </head>
     <body>
         <h3>Enter your login information</h3>    
-      <%--
-        id:       ${helper.errors.id}<br>
-        username: ${helper.errors.username} <br>
-        primary_address:   ${helper.errors.primary_address}<br>
-        secondary_address: ${helper.errors.secondary_address} <br>
-        city:     ${helper.errors.city}<br>       
-        state:    ${helper.errors.state_abbr} <br>
-        zip_code: ${helper.errors.zip_code}<br>       
-        phone:    ${helper.errors.phone} <br>
-        email:    ${helper.errors.email} <br>
-        password: ${helper.errors.password}<br>        
---%>
+  
         <form method="POST" action="Controller">
-            email: <input type="text" name="email" value="${helper.userData.email}"> <br>
-            password: <input type="text" name="password" value="${helper.userData.password}"> <br>
-                      <input type="submit" name="loginConfirmButton" value="login">
+            
+             ${helper.userData.email_error_message}
+             <input type="hidden" name="email_error_message" value="" > 
+             ${helper.errors.email}
+             email: <input type="text" name="email" value="${helper.userData.email}"> <br>
+            
+             ${helper.userData.password_error_message}
+              <input type="hidden" name="password_error_message" value="" >
+             ${helper.errors.password}
+             password: <input type="text" name="password" value="${helper.userData.password}"> <br>
+            
+             <input type="submit" name="loginConfirmButton" value="Login">
+             <input type="submit" name="signupButton" value="Sign Up">
         </form>
     </body>
 </html>

@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
+import javax.servlet.http.Cookie;
+import shared.CookieUtil;
 
 public class ControllerHelper extends HelperBase {
 
     protected boolean initialLoad = true;
 
     protected SellBook data = new SellBook();
-    protected User userData = new User();
+    protected UserProfile userData = new UserProfile();
 
     public ControllerHelper(
             HttpServlet servlet,
@@ -42,13 +44,13 @@ public class ControllerHelper extends HelperBase {
         props.setProperty("hibernate.connection.password", "password");
 
         boolean create = Boolean.parseBoolean(servlet.getInitParameter("create"));
-        if (create)
+        if (create){
             HibernateHelper.createTable(props, SellBook.class);
-            HibernateHelper.createTable(props, User.class);
-
-        HibernateHelper.initSessionFactory(props, SellBook.class);
-        HibernateHelper.initSessionFactory(props, User.class);
+            HibernateHelper.createTable(props, UserProfile.class);
     }
+        HibernateHelper.initSessionFactory(props, SellBook.class);
+        HibernateHelper.initSessionFactory(props, UserProfile.class);
+        }
 
     public Object getData() { return data; }
     public Object getUserData() { return userData; }
@@ -118,71 +120,91 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("sell/process.jsp");
     }
 
-        /* Jason */ 
-    @ButtonMethod(buttonName = "loginButton")
-    public String loginButtonMethod()
-    {
-        System.out.println("tracer from loginButton Method");
-        return jspLocation("login/editLogin.jsp");
+    /* Jason */
+    //@Override
+    @ButtonMethod(buttonName="loginButton")
+    public String loginButtonMethod(){
+      String address = "login/editLogin.jsp";
+        Cookie accountCookie =
+                CookieUtil.findCookie(request, "email");
+        if (accountCookie != null) {
+            Object dataPersistent = HibernateHelper.getFirstMatch(userData,
+                    "email",
+                    accountCookie.getValue());
+            if (dataPersistent != null) {
+                userData = (UserProfile) dataPersistent;
+            }
+            address = "login/editLogin.jsp";
+        }
+        return jspLocation(address);    
     }
+
+    /* Jason */ 
+    @ButtonMethod(buttonName = "processLoginButton")
+    public String processLoginButtonMethod()
+    {
+        return jspLocation("login/processLogin.jsp");
+    }
+    
     /* Jason */
     @ButtonMethod(buttonName = "loginConfirmButton")
     public String loginConfirmMethod() {
+        //fill the new bean with the form elements from editLogin.jsp
         fillBeanFromRequest(userData);
+        // populate the error map
         setErrors(userData);
-        /* The next JSP address depends on the validity of the data. */
+        // set custom error message handelers to null
+        userData.setEmail_error_message(null);
+        userData.setPassword_error_message(null);
+        userData.setMisc_error_message(null);
+        /* set default jsp location */
         String address = jspLocation("login/editLogin.jsp");
-        /* stores a copy of the password to be used below for validation */
+        /* Store a copy of the password that the user has submitted. */
         String tempPassword = userData.getPassword();
-        /* use @ annotations in user.java to check for null and email type. if not,
-             the return user to the editLogin.jsp page
-        */ 
+        /* use @ annotations in userProfile.java to check for null and email syntax type. If invalid,
+             then return user to the editLogin.jsp page */        
         if (isValidProperty("email") && isValidProperty("password") ) 
-        { /* check to see if email exists in the user table. if yes, assign bean to 
-            to Object dataPersistent. If no, then return user to editLogin.jsp 
-          */
-            Object dataPersistent = HibernateHelper.getFirstMatch(userData, "email" ,userData.getEmail() );
-           /*  */
-            if(dataPersistent != null)
-            { /* we know know that dataPersistent contains a bean with the correct email now, 
-                   we need to veriy the password. Assign the bean to userData then verify
-                   the password.
-              */
-                userData = (User)dataPersistent;
+        { /* check to see if the email submitted by the user exists in the user table. If yes, assign bean to 
+             to Object result continue to password check. If no, then return user to editLogin.jsp */
+            Object result = HibernateHelper.getFirstMatch(userData, "email" ,userData.getEmail() );
+            if(result != null)
+            { /* we know know that result contains an object with an email that exists in the database. 
+                 Now, verify the password associated with that object. Assign result to userData,
+                retrieve the associated password from the database and then verify against 
+                the tempPassword stored earlier. */               
+                userData = (UserProfile)result;
                 if( userData.getPassword().equals( tempPassword ) )
-                {
-                         java.util.List list =
-                HibernateHelper.getListData(userData.getClass());
-        request.setAttribute("database", list);
+                {/* If password matches, send user to processLogin.jsp.
+                    Else, send user to editLogin.jsp */
+                    java.util.List list =
+                        HibernateHelper.getListData(userData.getClass());
+                    request.setAttribute("database", list);
                     address = jspLocation("login/processLogin.jsp");
                 }
                 else
-                {
+                {   /* notify user that password does not match given email. Send user to editLogin.jsp */ 
+                    userData.setPassword_error_message("password does not match");
                     address = jspLocation("login/editLogin.jsp");
                 }   
             }
             clearErrors();
-            
         } else {
             address = jspLocation("login/editLogin.jsp");
         }
-    
+         /* Notify user that the email or password is not a valid format. */
+            userData.setEmail_error_message("Email not found");
         return address;
     }
     
     /* Jason */
     @ButtonMethod(buttonName = "loginSubmit")
     public String loginSubmitMethod()
-    {System.out.println("tracer from loginSubmit Method");
-    
-    fillBeanFromRequest(userData);
-    
+    {
+        fillBeanFromRequest(userData);
         if (!isValid(userData)) {
             return jspLocation("Expired.jsp");
         }
-        System.out.println("Tracer before - login method() HibernateHelper.updateDB(userData)");
         HibernateHelper.updateDB(userData);
-        System.out.println("Tracer after - login method() HibernateHelper.updateDB(userData)");
         java.util.List list =
                 HibernateHelper.getListData(userData.getClass());
         request.setAttribute("database", list);
@@ -193,8 +215,10 @@ public class ControllerHelper extends HelperBase {
         @ButtonMethod(buttonName = "signupButton")
     public String signupButtonMethod()
     {
-        System.out.println("tracer from signupButton Method");
-         return jspLocation("signup/editSignUp.jsp");
+        userData.setEmail_error_message(null);
+        userData.setPassword_error_message(null);
+        userData.setMisc_error_message(null);
+        return jspLocation("signup/editSignUp.jsp");
     }
     /* Jason */
       @ButtonMethod(buttonName = "userConfirmButton")
@@ -202,33 +226,98 @@ public class ControllerHelper extends HelperBase {
         fillBeanFromRequest(userData);
         //The next JSP address depends on the validity of the data.
         String address;
-        if (isValid(userData)) {
+        /* Always reset custom error messages to null */
+        userData.setEmail_error_message(null);
+        userData.setPassword_error_message(null);
+        userData.setMisc_error_message(null);
+        /* Check to see if the email and/or username requested by the user are already taken.
+            If yes, assign appropriate error messages and return user to editSignUp.jsp */
+         Object result = HibernateHelper.getFirstMatch(userData, "email" ,userData.getEmail() );
+         Object result2 = HibernateHelper.getFirstMatch(userData, "username" ,userData.getUsername() );
+         if(result != null){userData.setEmail_error_message("That email is not available");}
+         if(result2 != null){userData.setUsername_error_message("That username is not available");}
+           /* If email and username are unique and errors map is clear, then send user to confirmSignUp.jsp */
+        if (isValid(userData) && result == null && result2 == null) {
             address = jspLocation("signup/confirmSignUp.jsp");
-        } else {
+        }
+        else { /* if email and/or username are not unique or there are errors in the error map then
+                send user to editSignUp.jsp */
             address = jspLocation("signup/editSignUp.jsp");
         }
         return address;
     }
-    /* Jason */
+
     @ButtonMethod(buttonName = "userProcessButton")
     public String userProcessMethod()
     {
     fillBeanFromRequest(userData);
-    
         if (!isValid(userData)) {
             return jspLocation("Expired.jsp");
         }
+        //response.addCookie(new Cookie("email", userData.getEmail()));
+        Cookie email = new Cookie("email", userData.getEmail());
+        email.setMaxAge(31536000); /* 86400 seconds per day x 365 days a year. */
+        response.addCookie(email);
         HibernateHelper.updateDB(userData);
         java.util.List list = HibernateHelper.getListData(userData.getClass());
         request.setAttribute("database", list);
-        //return jspLocation("signup/processSignUp.jsp");
         return jspLocation("login/processLogin.jsp");
     }
+    
     /* Jason */
     @ButtonMethod(buttonName = "userEditButton")
     public String userEditMethod()
     {
         return jspLocation("signup/editSignUp.jsp");
+    }
+    /* Jason */
+    @ButtonMethod(buttonName = "editProfileButton")
+    public String editProfileMethod()
+    {
+        return jspLocation("login/editProfile.jsp");
+    }
+    
+    /* Jason */
+      @ButtonMethod(buttonName = "updateProfileButton")
+    public String updateProfileMethod() {
+        String address = jspLocation("login/editProfile.jsp");
+        /* Always reset custom error message values to null */
+        userData.setEmail_error_message(null);
+        userData.setPassword_error_message(null);
+        userData.setMisc_error_message(null);
+        Object result2 = HibernateHelper.getFirstMatch(userData, "email", userData.getEmail() );
+        Object result = null;
+        /* check and see if user is requesting a new username. If yes, then verify that
+           it is available. This must be completed before fillBearnFromRequest() because
+            username is a unique field and attempting to assign a duplicate will
+            throw an un-recoverable error. */
+            if(!userData.getUsername().equals(request.getParameter("username"))){
+            result = HibernateHelper.getFirstMatch(userData, "username", request.getParameter("username"));
+            }         
+            if(result == null){
+                /* Once here, the requested username is available, fill the bean with all the data
+                   from the editProfile submission and validate data integrity. */
+                fillBeanFromRequest(userData);
+                setErrors(userData);
+                /* verify all fields conform to restrictions. */
+                if(isValid(userData)){
+                        HibernateHelper.updateDB(userData);
+                        java.util.List list = HibernateHelper.getListData(userData.getClass());
+                        request.setAttribute("database", list);
+                        userData.setMisc_error_message("Profile successfully updated!");
+                    return address;
+                }
+                /* userData validation found errors. Since data is invalid we must reset
+                   the bean to the state before calling fillbeanfromrequest(). Otherwise,
+                   bean will have incorrect data.
+                   */
+                if(result2 != null){
+                    userData = (UserProfile)result2;
+                    return address;                   
+                }    
+            }
+        userData.setUsername_error_message("That username is not available");
+        return address;
     }
     
     
@@ -244,7 +333,9 @@ public class ControllerHelper extends HelperBase {
         //Modify to test pages
         //String address = initialLoad();
         String address = editMethod();
-
+        if(   request.getParameter("userSignOutButton") != null ){
+            address = loginButtonMethod();
+            }
         request.getRequestDispatcher(address).forward(request, response);
     }
 

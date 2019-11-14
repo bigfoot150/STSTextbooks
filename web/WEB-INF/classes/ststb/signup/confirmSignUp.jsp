@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Confirm SignUp</title>
+        <title>Confirm Sign Up</title>
     </head>
     <body>
         <p>Confirm that the entries are correct.</p>
@@ -35,7 +35,5 @@
                    value="Process">
         </form>
     </p>
-        
-        
     </body>
 </html>
