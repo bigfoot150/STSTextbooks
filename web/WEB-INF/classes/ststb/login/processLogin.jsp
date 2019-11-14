@@ -41,6 +41,7 @@
           ${row.last_name} <br>
           ${row.primary_address} <br>
           ${row.secondary_address} <br>
+          ${row.city} <br>
           ${row.state_abbr} <br>
           ${row.zip_code} <br>
           ${row.phone} <br>
