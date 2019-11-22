@@ -12,9 +12,9 @@ import java.util.Properties;
 
 public class HibernateHelper {
 
-    static protected Logger log = Logger.getLogger("ststb.hibernate");
-    static protected List<Class> listClasses = new ArrayList<Class>();
-    static protected SessionFactory sessionFactory;
+    static private Logger log = Logger.getLogger("ststb.hibernate");
+    static private List<Class> listClasses = new ArrayList<Class>();
+    static private SessionFactory sessionFactory;
 
     static public void initSessionFactory(Properties props, Class... mappings)
     {
@@ -286,11 +286,11 @@ public class HibernateHelper {
                 strKey, value);
     }
 
-    static public Object getKeyData(Class beanClass, long itemId) {
+    static public Object getKeyData(Class beanClass, long itemid) {
         Object data;
         Session session = sessionFactory.openSession();
 
-        data = session.get(beanClass, itemId);
+        data = session.get(beanClass, itemid);
 
         session.close();
 

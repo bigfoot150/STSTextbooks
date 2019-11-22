@@ -21,22 +21,21 @@ public class CreateCatalogue extends HttpServlet {
         HibernateHelper.initSessionFactory(CatalogueItem.class);
     }
 
-    static final List<CatalogueItem> itemList =
-            new ArrayList<CatalogueItem>();
+    static final List<CatalogueItem> itemList = new ArrayList<CatalogueItem>();
 
     static {
         itemList.add(new CatalogueItem(
                 "A1", "The Foundation Trilogy",
-                "A very fine book. Why not buy one?", 1.11));
+                "A very fine book. Why not buy one?", 1.11, "978-1607962748", "1607962748", "system", "Issac Asimov", 5.00, 10));
         itemList.add(new CatalogueItem(
                 "T2", "The Hobbit",
-                "A very fine book. Why not buy two?", 2.22));
+                "A very fine book. Why not buy two?", 2.22, "978-0261102002", "0261102001", "system", "J. R. R. Tolkien", 5.00, 5));
         itemList.add(new CatalogueItem(
                 "Y3", "Light on Yoga",
-                "A very fine book. Why not buy three?", 3.33));
+                "A very fine book. Why not buy three?", 3.33, "978-0805210316", "0805210318", "system", "B. K. S. Iyengar", 5.00, 6));
         itemList.add(new CatalogueItem(
-                "M4", "Blue Monkey Sideshow",
-                "A very fine book. Why not buy four?", 4.44));
+                "M4", "Programming: Principles and Practice Using C++",
+                "An Introduction to Programming by the Inventor of C++", 4.44, "978-0321992789", "0321992784", "system", "Bjarne Stroustrup", 5.00, 6 ));
     }
 
     @Override
