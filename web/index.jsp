@@ -33,6 +33,7 @@
           <a href="ststb/Controller" target="iframe_main">Sell a Book</a>
           <a href="faq.html" target="iframe_main">FAQ</a>
           <a href="help.html" target="iframe_main">Help</a>
+          <a href="ststb/Controller" target="iframe_main">Shopping Cart</a>
       </p>
       </td>
     </tr>

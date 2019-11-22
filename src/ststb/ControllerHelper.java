@@ -27,6 +27,7 @@ public class ControllerHelper extends HelperBase {
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         props.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver"); //My SQL8 driver class
+        //props.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");  //older MYSQL driver class
         props.setProperty("hibernate.c3p0.min_size", "1");
         props.setProperty("hibernate.c3p0.max_size", "5");
         props.setProperty("hibernate.c3p0.timeout", "300");
