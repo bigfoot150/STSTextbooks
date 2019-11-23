@@ -10,45 +10,56 @@
 </p>
 <p>
     <form method="POST" action="Controller">
-
-     ISBN13
-    <input type="text" name="isbn13" value="${helper.data.isbn13}">
-    ${helper.errors.isbn13}
+    <table>
+        <tr>
+            <td>Item ID</td>
+            <td><input type="text" name="itemid" value="${helper.data.itemid}"></td>
+            <td>${helper.errors.itemid}</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td><input type="text" name="title" value="${helper.data.title}"></td>
+            <td>${helper.errors.title}</td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td><input type="text" name="author" value="${helper.data.author}"></td>
+            <td>${helper.errors.author}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><input type="text" name="description" value="${helper.data.description}"></td>
+            <td>${helper.errors.description}</td>
+        </tr>
+        <tr>
+            <td>ISBN13</td>
+            <td><input type="text" name="isbn13" value="${helper.data.isbn13}"></td>
+            <td>${helper.errors.isbn13}</td>
+        </tr>
+        <tr>
+            <td>ISBN10</td>
+            <td><input type="text" name="isbn10" value="${helper.data.isbn10}"></td>
+            <td>${helper.errors.isbn10}</td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="text" name="price" value="${helper.data.price}"></td>
+            <td>${helper.errors.price}</td>
+        </tr>
+        <tr>
+            <td>Shipping Cost</td>
+            <td><input type="text" name="shipping_cost" value="${helper.data.shipping_cost}"></td>
+            <td>${helper.errors.shipping_cost}</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td><input type="text" name="quantity" value="${helper.data.quantity}"></td>
+            <td>${helper.errors.quantity}</td>
+        </tr>
+    </table>
     <br>
-    ISBN10
-    <input type="text" name="isbn10" value="${helper.data.isbn10}">
-    ${helper.errors.isbn10}
     <br>
-    userid
-    <input type="text" name="userid" value="${helper.data.userid}">
-    ${helper.errors.userid}
-    <br>
-    Date
-    <input type="text" name="date_created" value="${helper.data.date_created}">
-    ${helper.errors.date_created}
-    <br>
-    Author
-    <input type="text" name="author" value="${helper.data.author}">
-    ${helper.errors.author}
-    <br>
-    Title
-    <input type="text" name="title" value="${helper.data.title}">
-    ${helper.errors.title}
-    <br>
-    Price
-    <input type="text" name="price" value="${helper.data.price}">
-    ${helper.errors.price}
-    <br>
-    Shipping Cost
-    <input type="text" name="shipping_cost" value="${helper.data.shipping_cost}">
-    ${helper.errors.shipping_cost}
-    <br>
-    Quantity
-    <input type="text" name="quantity" value="${helper.data.quantity}">
-    ${helper.errors.quantity}
-    <br>
-    <br>
-    <input type="submit" name="confirmButton" value="Submit">
+    <input type="submit" name="sellconfirmButton" value="Submit">
     </form>
 </p>
 

@@ -29,11 +29,19 @@
     <tr style="height: 5%">
       <td>
         <p>
-          <a href="ststb/Controller" target="iframe_main">Buy a Book</a>
-          <a href="ststb/Controller" target="iframe_main">Sell a Book</a>
-          <a href="faq.html" target="iframe_main">FAQ</a>
-          <a href="help.html" target="iframe_main">Help</a>
-      </p>
+          <form method="POST" action="ststb/Controller" target="iframe_main">
+            <input type="submit" name="buyButton"
+                 value="Buy a Book">
+            <input type="submit" name="selleditButton"
+                   value="Sell a Book">
+            <input type="submit" name="faqButton"
+                   value="FAQ">
+            <input type="submit" name="helpButton"
+                   value="Help">
+            <input type="submit" name="shoppingcartButton"
+                   value="Shopping Cart">
+          </form>
+        </p>
       </td>
     </tr>
   <%--  Row 4--%>

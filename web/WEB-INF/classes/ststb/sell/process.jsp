@@ -11,6 +11,6 @@
     <title>Process</title>
 </head>
 <body>
-
+Your book has been added to the inventory.
 </body>
 </html>
