@@ -15,8 +15,6 @@ import shared.CookieUtil;
 
 public class ControllerHelper extends HelperBase {
 
-
-
     private CatalogueItem data = new CatalogueItem();
     private CatalogueItem item = new CatalogueItem();
     private ShoppingCart<CatalogueItem> cart = new ShoppingCart<CatalogueItem>();
@@ -151,9 +149,8 @@ public class ControllerHelper extends HelperBase {
             Object dbObj = HibernateHelper.
                     getFirstMatch(item, "itemid",
                             item.getItemid());
-            if (dbObj != null) {
+            if (dbObj != null)
                 item = (CatalogueItem)dbObj;
-            }
         }
         return methodBrowseLoop();
     }
@@ -189,40 +186,19 @@ public class ControllerHelper extends HelperBase {
     @SuppressWarnings("unchecked")
     @ButtonMethod(buttonName="loginButton", isDefault=true)
     public String loginButtonMethod(){
-        String address;// = "login/editLogin.jsp";
+        String address;
         Cookie accountCookie = CookieUtil.findCookie(request, "email");
         if (accountCookie != null) {
             Object dataPersistent = HibernateHelper.getFirstMatch(user,"email", accountCookie.getValue());
             if (dataPersistent != null)
-            {
                 user = (UserProfile) dataPersistent;
-            }
             address = "login/editLogin.jsp";
-
         }
         else {
             address = "login/editLogin.jsp";
         }
         return jspLocation(address);
     }
-
-//    public String loginMethod() {
-//        String address;
-//        fillBeanFromRequest(cart);
-//        setErrors(cart);
-//        if (isValidProperty("accountNumber")) {
-//            Object dataPersistent = HibernateHelper.getFirstMatch(cart,"accountNumber", cart.getAccountNumber());
-//            if (dataPersistent != null)
-//            {
-//                cart = (ShoppingCart<CatalogueItem>)dataPersistent;
-//            }
-//            clearErrors();
-//            address = methodBrowseLoop();
-//        } else {
-//            address = jspLocation("Login.jsp");
-//        }
-//        return address;
-//    }
 
     @ButtonMethod(buttonName = "processLoginButton")
     public String processLoginButtonMethod()
@@ -306,6 +282,7 @@ public class ControllerHelper extends HelperBase {
         user.setMisc_error_message(null);
         return jspLocation("signup/editSignUp.jsp");
     }
+
     /* Jason */
     @ButtonMethod(buttonName = "userConfirmButton")
     public String userConfirmMethod() {
@@ -335,20 +312,17 @@ public class ControllerHelper extends HelperBase {
         return address;
     }
 
-
     @ButtonMethod(buttonName = "userProcessButton")
     public String userProcessMethod()
     {
         if (!isValid(user)) {
             return jspLocation("Expired.jsp");
         }
-        //response.addCookie(new Cookie("email", userData.getEmail()));
+
         Cookie email = new Cookie("email", user.getEmail());
         email.setMaxAge(31536000); /* 86400 seconds per day x 365 days a year. */
         response.addCookie(email);
         HibernateHelper.updateDB(user);
-        //java.util.List list = HibernateHelper.getListData(userData.getClass());
-        //request.setAttribute("database", list);
 
         user.setAuthenticated(true);
         return jspLocation("login/processLogin.jsp");
@@ -410,9 +384,6 @@ public class ControllerHelper extends HelperBase {
         return address;
     }
 
-
-
-
 ///////////////////////////////////////////////////////////////////////////
     @Override
     public void doGet() throws ServletException, java.io.IOException
@@ -420,9 +391,6 @@ public class ControllerHelper extends HelperBase {
         //Call the method with false to place a new helper in the session
         addHelperToSession("helper", SessionData.IGNORE);
 
-        //Modify to test pages
-        //String address = initialLoad();
-        //String address = editMethod();
         String address = executeButtonMethod();
 
         request.getRequestDispatcher(address).forward(request, response);
@@ -435,7 +403,4 @@ public class ControllerHelper extends HelperBase {
         String address = executeButtonMethod();
         request.getRequestDispatcher(address).forward(request, response);
     }
-
-
-
 }

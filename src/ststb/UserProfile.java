@@ -18,7 +18,6 @@ public class UserProfile extends shared.PersistentBase implements Serializable{
     private String first_name;
     private String last_name;
     private String primary_address;
-    //private String secondary_address;
     private String city;
     private String state_abbr;
     private String zip_code;
@@ -45,7 +44,7 @@ public class UserProfile extends shared.PersistentBase implements Serializable{
         this.first_name = first_name;
         this.last_name = last_name;
         this.primary_address = primary_address;
-        //this.secondary_address = secondary_address;
+
         this.city = city;
         this.state_abbr = state_abbr;
         this.zip_code = zip_code;
@@ -56,9 +55,7 @@ public class UserProfile extends shared.PersistentBase implements Serializable{
     }
     
     public UserProfile()    {
-
         this("", "", "", "", "", "","","","","");
-
     }
 
     /*    begin login table columns */
@@ -117,14 +114,6 @@ public class UserProfile extends shared.PersistentBase implements Serializable{
         this.primary_address = primary_address;
     }
     
-//    public String getSecondary_address() {
-//        return secondary_address;
-//    }
-//
-//    public void setSecondary_address(String secondary_address) {
-//        this.secondary_address = secondary_address;
-//    }
-
     @NotBlank
     public String getCity() {
         return city;
