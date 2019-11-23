@@ -37,16 +37,8 @@
         </p>
             <form method="post" action="Controller">
         <p>
-            <input type="submit" name="shop"
-                   value="Continue Shopping">
             <input type="submit" name="emptyCart"
-                   value="Empty Cart">
-            <input type="submit" name="saveCart"
-                   value="Save Cart">
-        </p>
-        <p>
-            <input type="submit" name="newUser"
-                   value="New User">
+                   value="Continue Shopping">
         </p>
             </form>
     </div>

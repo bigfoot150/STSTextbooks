@@ -171,6 +171,11 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("faq.html");
     }
 
+    @ButtonMethod(buttonName="helpButton")
+    public String helpMethod() {
+        return jspLocation("help.html");
+    }
+
     @ButtonMethod(buttonName="processCart")
     public String methodProcess() {
         cart.setTotal(0);
