@@ -15,17 +15,21 @@
         <h3>Enter your login information</h3>    
   
         <form method="POST" action="Controller">
-            
-             ${helper.userData.email_error_message}
-             <input type="hidden" name="email_error_message" value="" > 
-             ${helper.errors.email}
-             email: <input type="text" name="email" value="${helper.userData.email}"> <br>
-            
-             ${helper.userData.password_error_message}
-              <input type="hidden" name="password_error_message" value="" >
-             ${helper.errors.password}
-             password: <input type="text" name="password" value="${helper.userData.password}"> <br>
-            
+            <input type="hidden" name="email_error_message" value="" >
+            <input type="hidden" name="password_error_message" value="" >
+            <table>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="text" name="email" value="${helper.user.email}"></td>
+                    <td>${helper.user.email_error_message}</td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="text" name="password" value="${helper.user.password}"></td>
+                    <td>${helper.user.password_error_message}</td>
+                </tr>
+            </table>
+
              <input type="submit" name="loginConfirmButton" value="Login">
              <input type="submit" name="signupButton" value="Sign Up">
         </form>

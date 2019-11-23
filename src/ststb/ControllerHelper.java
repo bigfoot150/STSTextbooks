@@ -15,12 +15,12 @@ import shared.CookieUtil;
 
 public class ControllerHelper extends HelperBase {
 
-    protected boolean initialLoad = true;
+
 
     private CatalogueItem data = new CatalogueItem();
     private CatalogueItem item = new CatalogueItem();
     private ShoppingCart<CatalogueItem> cart = new ShoppingCart<CatalogueItem>();
-    protected UserProfile userData = new UserProfile();
+    protected UserProfile user = new UserProfile();
 
     public ControllerHelper(
             HttpServlet servlet,
@@ -49,6 +49,16 @@ public class ControllerHelper extends HelperBase {
 
     public Object getData() { return data; }
 
+    public Object getItem() {
+        return item;
+    }
+
+    public Object getCart() {
+        return cart;
+    }
+
+    public Object getUser() {return user;}
+
     public void copyFromSession(Object sessionHelper)
     {
         if (sessionHelper.getClass() == this.getClass())
@@ -56,6 +66,7 @@ public class ControllerHelper extends HelperBase {
             item = ((ControllerHelper)sessionHelper).item;
             cart = ((ControllerHelper)sessionHelper).cart;
             data = ((ControllerHelper) sessionHelper).data;
+            user = ((ControllerHelper) sessionHelper).user;
         }
     }
 
@@ -67,12 +78,16 @@ public class ControllerHelper extends HelperBase {
     @ButtonMethod(buttonName = "selleditButton")
     public String editMethod()
     {
+        if(!user.getAuthenticated())
+            return jspLocation("login/editLogin.jsp");
+
         return jspLocation("sell/edit.jsp");
     }
 
     @ButtonMethod(buttonName = "sellconfirmButton")
     public String confirmMethod() {
         fillBeanFromRequest(data);
+        data.setUserid(user.getEmail());
         //The next JSP address depends on the validity of the data.
         String address;
         if (isValid(data)) {
@@ -103,17 +118,12 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("SaveCart.jsp");
     }
 
-    public Object getItem() {
-        return item;
-    }
-
-    public Object getCart() {
-        return cart;
-    }
-
-
     @ButtonMethod(buttonName="buyButton")
     public String methodBrowseLoop() {
+
+        if(!user.getAuthenticated())
+            return jspLocation("login/editLogin.jsp");
+
         //Make all the catalog items available from the browseloop.jsp.
         java.util.List list = HibernateHelper
                 .getListData(item.getClass());
@@ -179,19 +189,19 @@ public class ControllerHelper extends HelperBase {
     @SuppressWarnings("unchecked")
     @ButtonMethod(buttonName="loginButton", isDefault=true)
     public String loginButtonMethod(){
-        String address = "login/editLogin.jsp";
+        String address;// = "login/editLogin.jsp";
         Cookie accountCookie = CookieUtil.findCookie(request, "email");
         if (accountCookie != null) {
-            Object dataPersistent = HibernateHelper.getFirstMatch(userData,"email", accountCookie.getValue());
+            Object dataPersistent = HibernateHelper.getFirstMatch(user,"email", accountCookie.getValue());
             if (dataPersistent != null)
             {
-                userData = (UserProfile) dataPersistent;
+                user = (UserProfile) dataPersistent;
             }
             address = "login/editLogin.jsp";
 
         }
         else {
-            address = jspLocation("Login.jsp");
+            address = "login/editLogin.jsp";
         }
         return jspLocation(address);
     }
@@ -217,46 +227,47 @@ public class ControllerHelper extends HelperBase {
     @ButtonMethod(buttonName = "processLoginButton")
     public String processLoginButtonMethod()
     {
+        user.setAuthenticated(true);
         return jspLocation("login/processLogin.jsp");
     }
 
     @ButtonMethod(buttonName = "loginConfirmButton")
     public String loginConfirmMethod() {
         //fill the new bean with the form elements from editLogin.jsp
-        fillBeanFromRequest(userData);
+        fillBeanFromRequest(user);
         // populate the error map
-        setErrors(userData);
+        setErrors(user);
         // set custom error message handelers to null
-        userData.setEmail_error_message(null);
-        userData.setPassword_error_message(null);
-        userData.setMisc_error_message(null);
+        user.setEmail_error_message(null);
+        user.setPassword_error_message(null);
+        user.setMisc_error_message(null);
         /* set default jsp location */
         String address = jspLocation("login/editLogin.jsp");
         /* Store a copy of the password that the user has submitted. */
-        String tempPassword = userData.getPassword();
+        String tempPassword = user.getPassword();
          /* use @ annotations in userProfile.java to check for null and email syntax type. If invalid,
              then return user to the editLogin.jsp page */
         if (isValidProperty("email") && isValidProperty("password") )
         { /* check to see if the email submitted by the user exists in the user table. If yes, assign bean to
              to Object result continue to password check. If no, then return user to editLogin.jsp */
-            Object result = HibernateHelper.getFirstMatch(userData, "email" ,userData.getEmail() );
+            Object result = HibernateHelper.getFirstMatch(user, "email" , user.getEmail() );
             if(result != null)
             { /* we know know that result contains an object with an email that exists in the database.
                  Now, verify the password associated with that object. Assign result to userData,
                 retrieve the associated password from the database and then verify against
                 the tempPassword stored earlier. */
-                userData = (UserProfile)result;
-                if( userData.getPassword().equals( tempPassword ) )
+                user = (UserProfile)result;
+                if( user.getPassword().equals( tempPassword ) )
                 {/* If password matches, send user to processLogin.jsp.
                     Else, send user to editLogin.jsp */
                     java.util.List list =
-                            HibernateHelper.getListData(userData.getClass());
+                            HibernateHelper.getListData(user.getClass());
                     request.setAttribute("database", list);
                     address = jspLocation("login/processLogin.jsp");
                 }
                 else
                 {   /* notify user that password does not match given email. Send user to editLogin.jsp */
-                    userData.setPassword_error_message("password does not match");
+                    user.setPassword_error_message("password does not match");
                     address = jspLocation("login/editLogin.jsp");
                 }
             }
@@ -267,20 +278,20 @@ public class ControllerHelper extends HelperBase {
         }
 
         /* Notify user that the email or password is not a valid format. */
-        userData.setEmail_error_message("Email not found");
+        user.setEmail_error_message("Email not found!");
         return address;
     }
 
     @ButtonMethod(buttonName = "loginSubmit")
     public String loginSubmitMethod()
     {
-        fillBeanFromRequest(userData);
-        if (!isValid(userData)) {
+        fillBeanFromRequest(user);
+        if (!isValid(user)) {
             return jspLocation("Expired.jsp");
         }
-        HibernateHelper.updateDB(userData);
+        HibernateHelper.updateDB(user);
         java.util.List list =
-                HibernateHelper.getListData(userData.getClass());
+                HibernateHelper.getListData(user.getClass());
         request.setAttribute("database", list);
         return jspLocation("login/processLogin.jsp");
     }
@@ -290,29 +301,31 @@ public class ControllerHelper extends HelperBase {
     @ButtonMethod(buttonName = "signupButton")
     public String signupButtonMethod()
     {
-        userData.setEmail_error_message(null);
-        userData.setPassword_error_message(null);
-        userData.setMisc_error_message(null);
+        user.setEmail_error_message(null);
+        user.setPassword_error_message(null);
+        user.setMisc_error_message(null);
         return jspLocation("signup/editSignUp.jsp");
     }
     /* Jason */
     @ButtonMethod(buttonName = "userConfirmButton")
     public String userConfirmMethod() {
-        fillBeanFromRequest(userData);
+        fillBeanFromRequest(user);
         //The next JSP address depends on the validity of the data.
         String address;
         /* Always reset custom error messages to null */
-        userData.setEmail_error_message(null);
-        userData.setPassword_error_message(null);
-        userData.setMisc_error_message(null);
+        user.setEmail_error_message(null);
+        user.setPassword_error_message(null);
+        user.setMisc_error_message(null);
         /* Check to see if the email and/or username requested by the user are already taken.
             If yes, assign appropriate error messages and return user to editSignUp.jsp */
-        Object result = HibernateHelper.getFirstMatch(userData, "email" ,userData.getEmail() );
-        Object result2 = HibernateHelper.getFirstMatch(userData, "username" ,userData.getUsername() );
-        if(result != null){userData.setEmail_error_message("That email is not available");}
-        if(result2 != null){userData.setUsername_error_message("That username is not available");}
+        Object result = HibernateHelper.getFirstMatch(user, "email" , user.getEmail() );
+        Object result2 = HibernateHelper.getFirstMatch(user, "username" , user.getUsername() );
+        if(result != null){
+            user.setEmail_error_message("That email is not available");}
+        if(result2 != null){
+            user.setUsername_error_message("That username is not available");}
         /* If email and username are unique and errors map is clear, then send user to confirmSignUp.jsp */
-        if (isValid(userData) && result == null && result2 == null) {
+        if (isValid(user) && result == null && result2 == null) {
             address = jspLocation("signup/confirmSignUp.jsp");
         }
         else { /* if email and/or username are not unique or there are errors in the error map then
@@ -326,18 +339,18 @@ public class ControllerHelper extends HelperBase {
     @ButtonMethod(buttonName = "userProcessButton")
     public String userProcessMethod()
     {
-        fillBeanFromRequest(userData);
-        if (!isValid(userData)) {
+        if (!isValid(user)) {
             return jspLocation("Expired.jsp");
         }
         //response.addCookie(new Cookie("email", userData.getEmail()));
-        Cookie email = new Cookie("email", userData.getEmail());
+        Cookie email = new Cookie("email", user.getEmail());
         email.setMaxAge(31536000); /* 86400 seconds per day x 365 days a year. */
         response.addCookie(email);
-        HibernateHelper.updateDB(userData);
-        java.util.List list = HibernateHelper.getListData(userData.getClass());
-        request.setAttribute("database", list);
+        HibernateHelper.updateDB(user);
+        //java.util.List list = HibernateHelper.getListData(userData.getClass());
+        //request.setAttribute("database", list);
 
+        user.setAuthenticated(true);
         return jspLocation("login/processLogin.jsp");
     }
 
@@ -359,29 +372,29 @@ public class ControllerHelper extends HelperBase {
     public String updateProfileMethod() {
         String address = jspLocation("login/editProfile.jsp");
         /* Always reset custom error message values to null */
-        userData.setEmail_error_message(null);
-        userData.setPassword_error_message(null);
-        userData.setMisc_error_message(null);
-        Object result2 = HibernateHelper.getFirstMatch(userData, "email", userData.getEmail() );
+        user.setEmail_error_message(null);
+        user.setPassword_error_message(null);
+        user.setMisc_error_message(null);
+        Object result2 = HibernateHelper.getFirstMatch(user, "email", user.getEmail() );
         Object result = null;
         /* check and see if user is requesting a new username. If yes, then verify that
            it is available. This must be completed before fillBearnFromRequest() because
             username is a unique field and attempting to assign a duplicate will
             throw an un-recoverable error. */
-        if(!userData.getUsername().equals(request.getParameter("username"))){
-            result = HibernateHelper.getFirstMatch(userData, "username", request.getParameter("username"));
+        if(!user.getUsername().equals(request.getParameter("username"))){
+            result = HibernateHelper.getFirstMatch(user, "username", request.getParameter("username"));
         }
         if(result == null){
                 /* Once here, the requested username is available, fill the bean with all the data
                    from the editProfile submission and validate data integrity. */
-            fillBeanFromRequest(userData);
-            setErrors(userData);
+            fillBeanFromRequest(user);
+            setErrors(user);
             /* verify all fields conform to restrictions. */
-            if(isValid(userData)){
-                HibernateHelper.updateDB(userData);
-                java.util.List list = HibernateHelper.getListData(userData.getClass());
+            if(isValid(user)){
+                HibernateHelper.updateDB(user);
+                java.util.List list = HibernateHelper.getListData(user.getClass());
                 request.setAttribute("database", list);
-                userData.setMisc_error_message("Profile successfully updated!");
+                user.setMisc_error_message("Profile successfully updated!");
                 return address;
             }
                 /* userData validation found errors. Since data is invalid we must reset
@@ -389,11 +402,11 @@ public class ControllerHelper extends HelperBase {
                    bean will have incorrect data.
                    */
             if(result2 != null){
-                userData = (UserProfile)result2;
+                user = (UserProfile)result2;
                 return address;
             }
         }
-        userData.setUsername_error_message("That username is not available");
+        user.setUsername_error_message("That username is not available");
         return address;
     }
 

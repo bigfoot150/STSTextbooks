@@ -15,17 +15,17 @@
         <p>Confirm that the entries are correct.</p>
         <p>Please confirm the below information for your new listing.</p>
     <p>
-        First Name: ${helper.userData.first_name}<br>
-        last Name: ${helper.userData.last_name}<br>
-        Primary Address: ${helper.userData.primary_address}<br>
-        Secondary Address: ${helper.userData.secondary_address}<br>       
-        City: ${helper.userData.city}<br>
-        State: ${helper.userData.state_abbr}<br>
-        Zip Code: ${helper.userData.zip_code}<br>
-        Phone: ${helper.userData.phone}<br>
-        User Name: ${helper.userData.username}<br>
-        Email: ${helper.userData.email}<br>    
-        Password: ${helper.userData.password}<br>
+        First Name: ${helper.user.first_name}<br>
+        Last Name: ${helper.user.last_name}<br>
+        Primary Address: ${helper.user.primary_address}<br>
+
+        City: ${helper.user.city}<br>
+        State: ${helper.user.state_abbr}<br>
+        Zip Code: ${helper.user.zip_code}<br>
+        Phone: ${helper.user.phone}<br>
+        User Name: ${helper.user.username}<br>
+        Email: ${helper.user.email}<br>
+        Password: ${helper.user.password}<br>
     </p>
     <p>
         <form method="POST" action="Controller">

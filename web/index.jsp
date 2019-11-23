@@ -16,14 +16,14 @@
         <h1 style="margin-bottom: 1px">StudentToStudentTextbooks.com</h1>
       </td>
       <td style="width: 20%;">
-        <iframe style="height:75px; border: 1px solid black; align-text: center" name="iframe_login" src="login.jsp"></iframe>
+        <iframe style="height:75px; border: 0" name="iframe_login" src="login.jsp"></iframe>
       </td>
     </tr>
 <%--  Row 2--%>
     <tr style="height: 5%">
 
-      <td>Search Bar Goes Here</td>
-      <td rowspan="4">Ads or something else goes here</td>
+      <td></td>
+      <td rowspan="4"></td>
     </tr>
 <%--  Row 3--%>
     <tr style="height: 5%">
@@ -52,7 +52,7 @@
     </tr>
   <%--  Row 5--%>
     <tr style="height: 10%">
-      <td>Other Links Go Here</td>
+      <td></td>
     </tr>
   </table>
   </body>

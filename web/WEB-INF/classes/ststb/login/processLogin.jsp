@@ -12,7 +12,7 @@
         <title>Process Login</title>
     </head>
     <body>
-        <h3>Welcome ${helper.userData.username}!</h3>
+        <h3>Welcome ${helper.user.username}!</h3>
         
         <form action="Controller" method="post">
             <input type="submit" name="editProfileButton" value="Edit Profile">
@@ -24,29 +24,28 @@
         </form>
   
         
-        <p><strong>Current Bean dump for development and testing</strong></p>
-        ${helper.userData.id} <br>
-        ${helper.userData.email} <br>
-        ${helper.userData.password} <br>
-        
-        <p><strong>Current user profiles dump for development and testing</strong></p>
-           <%@ taglib uri="http://java.sun.com/jsp/jstl/core" 
-             prefix="core" %>
-      <core:forEach var="row" items="${database}">
-          ${row.id} <br>
-          ${row.email} <br>
-          ${row.password} <br>
-          ${row.username} <br>
-          ${row.first_name} <br>
-          ${row.last_name} <br>
-          ${row.primary_address} <br>
-          ${row.secondary_address} <br>
-          ${row.city} <br>
-          ${row.state_abbr} <br>
-          ${row.zip_code} <br>
-          ${row.phone} <br>
-          <br><br>
-      </core:forEach>
+<%--        <p><strong>Current Bean dump for development and testing</strong></p>--%>
+<%--        ${helper.user.id} <br>--%>
+<%--        ${helper.user.email} <br>--%>
+<%--        ${helper.user.password} <br>--%>
+<%--        --%>
+<%--        <p><strong>Current user profiles dump for development and testing</strong></p>--%>
+<%--           <%@ taglib uri="http://java.sun.com/jsp/jstl/core" --%>
+<%--             prefix="core" %>--%>
+<%--      <core:forEach var="row" items="${database}">--%>
+<%--          ${row.id} <br>--%>
+<%--          ${row.email} <br>--%>
+<%--          ${row.password} <br>--%>
+<%--          ${row.username} <br>--%>
+<%--          ${row.first_name} <br>--%>
+<%--          ${row.last_name} <br>--%>
+<%--          ${row.primary_address} <br>--%>
+<%--          ${row.city} <br>--%>
+<%--          ${row.state_abbr} <br>--%>
+<%--          ${row.zip_code} <br>--%>
+<%--          ${row.phone} <br>--%>
+<%--          <br><br>--%>
+<%--      </core:forEach>--%>
       
         
     </body>
