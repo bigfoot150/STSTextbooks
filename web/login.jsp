@@ -5,7 +5,7 @@
 </head>
 <body>
 <div style="text-align: right">
-    <form method="GET" action="Controller">
+    <form method="POST" action="ststb/Controller">
         <input style="width: 100px" type="submit" name="loginButton" value="Login"><br>
         <input style="width: 100px" type="submit" name="signupButton" value="Signup"><br>
     </form>
