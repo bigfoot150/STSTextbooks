@@ -28,6 +28,7 @@
 <%--        ${helper.user.id} <br>--%>
 <%--        ${helper.user.email} <br>--%>
 <%--        ${helper.user.password} <br>--%>
+<%--        ${helper.user.first_name} <br> --%>
 <%--        --%>
 <%--        <p><strong>Current user profiles dump for development and testing</strong></p>--%>
 <%--           <%@ taglib uri="http://java.sun.com/jsp/jstl/core" --%>

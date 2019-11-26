@@ -32,6 +32,7 @@
 
              <input type="submit" name="loginConfirmButton" value="Login">
              <input type="submit" name="signupButton" value="Sign Up">
+             
         </form>
     </body>
 </html>

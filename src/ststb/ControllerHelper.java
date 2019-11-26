@@ -37,7 +37,7 @@ public class ControllerHelper extends HelperBase {
                     ShoppingCart.class,
                     CatalogueItem.class, UserProfile.class);
         }
-        HibernateHelper
+            HibernateHelper
                 .initSessionFactory(
                         ShoppingCart.class,
                         CatalogueItem.class, UserProfile.class);
@@ -164,7 +164,12 @@ public class ControllerHelper extends HelperBase {
     public String faqMethod() {
         return jspLocation("faq.html");
     }
-
+    
+    @ButtonMethod(buttonName="aboutUsButton")
+    public String aboutUsMethod() {
+        return jspLocation("aboutUs.html");
+    }
+    
     @ButtonMethod(buttonName="helpButton")
     public String helpMethod() {
         return jspLocation("help.html");
@@ -383,7 +388,70 @@ public class ControllerHelper extends HelperBase {
         user.setUsername_error_message("That username is not available");
         return address;
     }
-
+    /* Jason */
+    @ButtonMethod(buttonName = "editResetPasswordButton")
+    public String editResetPasswordButtonMethod()
+    {
+        /* create a new empty bean.  */
+        user = new UserProfile();
+        return jspLocation("password/editResetPassword.jsp");
+    }
+      /* Jason */
+    @ButtonMethod(buttonName = "ConfirmResetPasswordButton")
+    public String confirmResetPasswordButtonMethod() {
+        //fillBeanFromRequest(user);
+        //The next JSP address depends on the validity of the data.
+        String address;
+        /* Always reset custom error messages to null */
+        user.setEmail_error_message(null);
+        /* Check to see if the email exists. if no, re-direct user back to editResetPassword.jsp
+        if yes, send user to processPassword.jsp*/
+        Object result = HibernateHelper.getFirstMatch(user, "email" , request.getParameter("email") );
+        if(result != null){
+            user = (UserProfile)result;
+            address = jspLocation("password/confirmResetPassword.jsp"); 
+             }
+        else {  /* Check to see if the email exists. if no, re-direct user back to editResetPassword.jsp
+        if yes, send user to processPassword.jsp*/
+            user.setEmail_error_message("That email does not exist.");
+            address = jspLocation("password/editResetPassword.jsp");
+        }
+        return address;
+    }  
+          /* Jason */
+    @ButtonMethod(buttonName = "processResetPasswordButton")
+    public String processResetPasswordButtonMethod() {
+        //fillBeanFromRequest(user);
+        //The next JSP address depends on the validity of the data.
+        String address;
+        /* Always reset custom error messages to null */
+        user.setEmail_error_message(null);
+        /* Check to see if the email exists. if no, re-direct user back to editResetPassword.jsp
+        if yes, send user to processPassword.jsp*/
+        user.setPassword(request.getParameter("password"));
+        setErrors(user);
+        if(isValidProperty("password") )
+        {
+             HibernateHelper.updateDB(user);
+                java.util.List list = HibernateHelper.getListData(user.getClass());
+                request.setAttribute("database", list);
+                user.setMisc_error_message("Profile successfully updated!");
+            address = jspLocation("password/processResetPassword.jsp"); 
+                    }
+        else {  /* Check to see if the email exists. if no, re-direct user back to editResetPassword.jsp
+        if yes, send user to processPassword.jsp*/
+            address = jspLocation("password/confirmResetPassword.jsp");
+        }
+        return address;
+    } 
+      @ButtonMethod(buttonName = "userSignOutButton")
+    public String userSignOutButtonMethod()
+    {
+        user = new UserProfile();
+        return jspLocation("login/processLogin.jsp");
+    }
+    
+    
 ///////////////////////////////////////////////////////////////////////////
     @Override
     public void doGet() throws ServletException, java.io.IOException

@@ -2,7 +2,27 @@ h1 { color: black; font-family: Verdana; font-size: 200% }
 h2 { color: black; font-family: Verdana; font-size: 150%  }
 a  { color: black }
 table { border: 1px solid black; position: absolute; top: 0; bottom: 0; left: 0; }
-tr { border: 1px solid black }
+tr { border: 1px solid black; }
 td { border: 0; color: black; font-family: Verdana; border: 1px solid black}
 ul { list-style: none}
 p  { color: black; font-family: Verdana;  }
+
+td.grey{
+    background-color: gainsboro;
+}
+
+td.blue{
+    background-color: #CCCCFF;
+}
+
+p.question{
+    font-weight: bold;
+    font-size: 18pt;
+}
+p.answer{
+    text-indent: 10px;
+}
+
+dt{
+    font-weight: bold;
+}
