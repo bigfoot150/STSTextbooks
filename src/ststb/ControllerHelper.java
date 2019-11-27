@@ -208,7 +208,6 @@ public class ControllerHelper extends HelperBase {
     @ButtonMethod(buttonName = "processLoginButton")
     public String processLoginButtonMethod()
     {
-        user.setAuthenticated(true);
         return jspLocation("login/processLogin.jsp");
     }
 
@@ -244,6 +243,7 @@ public class ControllerHelper extends HelperBase {
                     java.util.List list =
                             HibernateHelper.getListData(user.getClass());
                     request.setAttribute("database", list);
+                    user.setAuthenticated(true);
                     address = jspLocation("login/processLogin.jsp");
                 }
                 else
@@ -447,6 +447,7 @@ public class ControllerHelper extends HelperBase {
       @ButtonMethod(buttonName = "userSignOutButton")
     public String userSignOutButtonMethod()
     {
+        user.setAuthenticated(false);
         user = new UserProfile();
         return jspLocation("login/processLogin.jsp");
     }
