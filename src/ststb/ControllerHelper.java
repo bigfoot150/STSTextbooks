@@ -277,6 +277,35 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("login/processLogin.jsp");
     }
 
+    @ButtonMethod(buttonName="updatePassword")
+    public String updatePassword()
+    {
+        String address;
+        String username = request.getParameter("username");
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        
+        // Get the user to be updated.
+        // If user exists then update password, if not then send them to the
+        // failure page.
+        Object userToUpdate = HibernateHelper.getFirstMatch(user, "username", username);
+
+        if (!oldPassword.equals(newPassword) && userToUpdate != null) {
+            user.setPassword(newPassword);
+            HibernateHelper.updateDB(user);
+            address = "login/passwordUpdated.jsp";
+        }
+        else {
+            address = "login/passwordUpdateFailed.jsp";
+        }
+        return jspLocation(address);
+    }
+    
+    @ButtonMethod(buttonName="changePassword")
+    public String resetPasswordMethod()
+    {
+        return jspLocation("login/changePassword.jsp");
+    }
 
     /* Jason */
     @ButtonMethod(buttonName = "signupButton")

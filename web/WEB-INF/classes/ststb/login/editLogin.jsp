@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>editLogin</title>
+        <title>Edit Login</title>
     </head>
     <body>
         <h3>Enter your login information</h3>    
@@ -32,7 +32,7 @@
 
              <input type="submit" name="loginConfirmButton" value="Login">
              <input type="submit" name="signupButton" value="Sign Up">
-             
+             <input type="submit" name="resetPassword" value="Reset Password">
         </form>
     </body>
 </html>

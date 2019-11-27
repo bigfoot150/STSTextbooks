@@ -16,6 +16,7 @@
         
         <form action="Controller" method="post">
             <input type="submit" name="editProfileButton" value="Edit Profile">
+            <input type="submit" name="changePassword" value="Change Password">
             <input type="submit" name="viewUserListingButton" value="View My Listings">       
         </form> <br>
               

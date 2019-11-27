@@ -55,12 +55,7 @@
                         <td>User Name:</td>
                         <td><input type="text" name="username" value="${helper.user.username}"></td> 
                         <td>${helper.errors.username} ${helper.user.username_error_message} </td>
-                    </tr>
-                    <tr>    
-                        <td>Password:</td>
-                        <td><input type="text" name="password" value="${helper.user.password}"></td>
-                        <td>${helper.errors.password} ${helper.user.password_error_message}</td>
-                    </tr>    
+                    </tr>  
              </table>
             <input type="hidden" name="email" value="${helper.user.email}"><br>
             <input type="hidden" name="username_error_message" value="">
