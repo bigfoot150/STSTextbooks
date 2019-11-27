@@ -277,6 +277,12 @@ public class ControllerHelper extends HelperBase {
         return jspLocation("login/processLogin.jsp");
     }
 
+    @ButtonMethod(buttonName="viewProfileButton")
+    public String viewProfile()
+    {
+        return jspLocation("login/viewProfile.jsp");
+    }
+    
     @ButtonMethod(buttonName="updatePassword")
     public String updatePassword()
     {

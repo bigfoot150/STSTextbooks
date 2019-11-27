@@ -15,6 +15,7 @@
         <h3>Welcome ${helper.user.username}!</h3>
         
         <form action="Controller" method="post">
+            <input type="submit" name="viewProfileButton" value="View Profile">
             <input type="submit" name="editProfileButton" value="Edit Profile">
             <input type="submit" name="changePassword" value="Change Password">
             <input type="submit" name="viewUserListingButton" value="View My Listings">       
