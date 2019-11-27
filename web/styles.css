@@ -14,15 +14,13 @@ td.grey{
 td.blue{
     background-color: #CCCCFF;
 }
-
-p.question{
-    font-weight: bold;
-    font-size: 18pt;
-}
-p.answer{
-    text-indent: 10px;
+/* used in login.jsp to make the text color white. (signed in username)
+    used in rightSideBar.html to make the paragraph text color white (quotes from people)
+    used in rightSideBar.html to make the h3 text color white */
+body.quotes, h3.quotes, p.quotes{
+    color: white;
 }
 
-dt{
-    font-weight: bold;
+body.index{
+    background: url(rowsoflibrarybooks.png);
 }

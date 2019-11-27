@@ -5,26 +5,28 @@
     <title>Student to Student Textbooks</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
-  <body>
+  <body class="index" >
 
 
   <table style="border: 1px solid black; width: 100%; height: 100%; 
          vertical-align: center; text-align: center" scrolling="yes" >
 <%--    Row 1--%>
-<tr style="border: 1px solid black; height: 5%; background-color: #ccccff; "  >
-      <td rowspan="5" style="width: 20%"></td>
+<tr  style="border: 1px solid black; height: 5%;  "  >
+    <td rowspan="5" style="width: 20%"></td>
       <td style="width: 60%; padding-bottom: 0; vertical-align: bottom; " >
-        <h1 style="margin-bottom: 1px; ">StudentToStudentTextbooks.com</h1>
+        <h1 style="margin-bottom: 1px; color: white;">StudentToStudentTextbooks.com</h1>
       </td>
-      <td style="width: 20%;">
-        <iframe style="height:75px; border: 0" name="iframe_login" src="login.jsp"></iframe>
+      <td class="quotes" style="width: 20%;">
+        <iframe class="quotes" style="height:75px; border: 0" name="iframe_login" src="login.jsp"></iframe>
       </td>
     </tr>
 <%--  Row 2--%>
     <tr style="height: 5%">
 
-      <td class="grey" ></td>
-      <td style="background-color: #ccccff;" rowspan="4"></td>
+      <td class="grey" >A website helping students buy and sell textbooks.</td>
+      <td rowspan="4" class="quotes">
+          <iframe  height="100%" width="100%" src="rightSideBar.html" ></iframe>
+      </td>
     </tr>
 <%--  Row 3--%>
     <tr style="height: 5%">
@@ -37,8 +39,6 @@
                    value="Sell a Book">
             <input type="submit" name="faqButton"
                    value="FAQ">
-            <input type="submit" name="helpButton"
-                   value="Help">
             <input type="submit" name="shoppingcartButton"
                    value="Shopping Cart">
             <input type="submit" name="aboutUsButton"
@@ -54,7 +54,7 @@
       </td>
     </tr>
   <%--  Row 5--%>
-    <tr style="height: 10%; background-color: #ccccff;">
+    <tr style="height: 10%; ">
       <td></td>
     </tr>
   </table>

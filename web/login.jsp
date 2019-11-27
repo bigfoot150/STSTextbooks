@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv="refresh" content="5" charset="utf-8">
+    <meta http-equiv="refresh" content="10" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body>
-    <strong>${helper.user.username}</strong> 
+<body class="quotes">
+        ${helper.user.username}
+    
 <div style="text-align: right">
     
     <form id="post" action="ststb/Controller" method="post" target="iframe_main"></form>

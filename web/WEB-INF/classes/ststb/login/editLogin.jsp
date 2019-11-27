@@ -1,12 +1,7 @@
-<%-- 
-    Document   : newjsp
-    Created on : Oct 25, 2019, 11:26:16 AM
-    Author     : Jason
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>editLogin</title>
@@ -30,7 +25,7 @@
                 </tr>
             </table>
 
-             <input type="submit" name="loginConfirmButton" value="Login">
+             <input type="submit" name="loginConfirmButton" value="Sign In">
              <input type="submit" name="signupButton" value="Sign Up">
              
         </form>

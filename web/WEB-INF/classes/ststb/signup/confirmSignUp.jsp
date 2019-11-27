@@ -6,44 +6,53 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Confirm Sign Up</title>
     </head>
     <body>
-        <p>Confirm that the entries are correct.</p>
         <p>Please confirm the below information for your new listing.</p>
         <table>
             <tr>
-                <td>First Name: ${helper.user.first_name}</td>
+                <td>First Name: </td>
+                <td>${helper.user.first_name}</td>
             </tr>
             <tr>
-                <td>Last Name: ${helper.user.last_name}</td>
+                <td>Last Name: </td>
+                <td>${helper.user.last_name}</td>
             </tr>
             <tr>
-                <td>Primary Address: ${helper.user.primary_address}</td>
+                <td>Primary Address: </td>
+                <td>${helper.user.primary_address}</td>
             </tr>
             <tr>
-                <td>City: ${helper.user.city}</td>
+                <td>City: </td>
+                <td>${helper.user.city}</td>
             </tr>
             <tr>
-                <td>State: ${helper.user.state_abbr}</td>
+                <td>State: </td>
+                <td>${helper.user.state_abbr}</td>
             </tr>
             <tr>
-                <td>Zip Code: ${helper.user.zip_code}</td>
+                <td>Zip Code: </td>
+                <td>${helper.user.zip_code}</td>
             </tr>
             <tr>
-                <td>Phone: ${helper.user.phone}</td>
+                <td>Phone: </td>
+                <td>${helper.user.phone}</td>
             </tr>
             <tr>
-                <td>User Name: ${helper.user.username}</td>
+                <td>User Name: </td>
+                <td>${helper.user.username}</td>
             </tr>
             <tr>
-                <td>Email: ${helper.user.email}</td>
+                <td>Email: </td>
+                <td>${helper.user.email}</td>
             </tr>
             <tr>
-                <td>Password: ${helper.user.password}</td>
+                <td>Password: </td>
+                <td>${helper.user.password}</td>
             </tr>
         </table>
     </p>

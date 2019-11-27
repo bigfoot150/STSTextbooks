@@ -1,8 +1,3 @@
-<%-- 
-    Document   : editProfile
-    Created on : Nov 11, 2019, 11:11:49 PM
-    Author     : Jason
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

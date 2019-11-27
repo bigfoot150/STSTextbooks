@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Process Login</title>
@@ -16,7 +16,6 @@
         
         <form action="Controller" method="post">
             <input type="submit" name="editProfileButton" value="Edit Profile">
-            <input type="submit" name="viewUserListingButton" value="View My Listings">       
         </form> <br>
               
         <form action="Controller" method="get">
