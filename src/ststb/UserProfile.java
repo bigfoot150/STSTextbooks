@@ -61,7 +61,7 @@ public class UserProfile extends shared.PersistentBase implements Serializable{
     /*    begin login table columns */
     @NotBlank
     @Email(message = "please enter a valid email")
-    @Column(unique = true) /* only helps hibernate design schema. otherwise induces runtime error. */    
+    @Column(unique = true) /* only helps hibernate design schema. otherwise induces runtime error. */  
     public String getEmail() {
         return email;
     }

@@ -14,18 +14,38 @@
     <body>
         <p>Confirm that the entries are correct.</p>
         <p>Please confirm the below information for your new listing.</p>
-    <p>
-        First Name: ${helper.user.first_name}<br>
-        Last Name: ${helper.user.last_name}<br>
-        Primary Address: ${helper.user.primary_address}<br>
-
-        City: ${helper.user.city}<br>
-        State: ${helper.user.state_abbr}<br>
-        Zip Code: ${helper.user.zip_code}<br>
-        Phone: ${helper.user.phone}<br>
-        User Name: ${helper.user.username}<br>
-        Email: ${helper.user.email}<br>
-        Password: ${helper.user.password}<br>
+        <table>
+            <tr>
+                <td>First Name: ${helper.user.first_name}</td>
+            </tr>
+            <tr>
+                <td>Last Name: ${helper.user.last_name}</td>
+            </tr>
+            <tr>
+                <td>Primary Address: ${helper.user.primary_address}</td>
+            </tr>
+            <tr>
+                <td>City: ${helper.user.city}</td>
+            </tr>
+            <tr>
+                <td>State: ${helper.user.state_abbr}</td>
+            </tr>
+            <tr>
+                <td>Zip Code: ${helper.user.zip_code}</td>
+            </tr>
+            <tr>
+                <td>Phone: ${helper.user.phone}</td>
+            </tr>
+            <tr>
+                <td>User Name: ${helper.user.username}</td>
+            </tr>
+            <tr>
+                <td>Email: ${helper.user.email}</td>
+            </tr>
+            <tr>
+                <td>Password: ${helper.user.password}</td>
+            </tr>
+        </table>
     </p>
     <p>
         <form method="POST" action="Controller">
