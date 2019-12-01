@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
@@ -22,6 +25,7 @@ public class ShoppingCart<Item>
     private static NumberFormat currency = NumberFormat.getCurrencyInstance();
     private double total;
     private int count;
+    private String email;
 
     public ShoppingCart() {
         resetItems();
@@ -79,6 +83,16 @@ public class ShoppingCart<Item>
         this.accountNumber = accountNumber;
     }
 
+    @NotBlank
+    @Email(message = "please enter a valid email")
+    @Column(unique = true) /* only helps hibernate design schema. otherwise induces runtime error. */  
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     protected List<CatalogueItem> items;
 

@@ -179,13 +179,20 @@ public class ControllerHelper extends HelperBase {
     public String methodProcess() {
         cart.setTotal(0);
         cart.setCount(0);
+        cart.setAccountNumber("TT123"); //Need a account number generator made in the sign-up user
+        cart.setEmail(user.getEmail());
         for(Object anObject : cart.getItems()) {
-            CatalogueItem anItem =
-                    (CatalogueItem)anObject;
+            CatalogueItem anItem = (CatalogueItem)anObject;
             cart.addTotal(anItem.getPrice());
             cart.incrCount();
+            HibernateHelper.updateDB(cart);
         }
         return jspLocation("shoppingcart/Process.jsp");
+    }
+    
+    @ButtonMethod(buttonName="viewTransactions")
+    public String viewTransactions() {
+        return jspLocation("login/viewTransactions.jsp");
     }
 
     @SuppressWarnings("unchecked")
@@ -364,7 +371,7 @@ public class ControllerHelper extends HelperBase {
         if (!isValid(user)) {
             return jspLocation("Expired.jsp");
         }
-
+        
         Cookie email = new Cookie("email", user.getEmail());
         email.setMaxAge(31536000); /* 86400 seconds per day x 365 days a year. */
         response.addCookie(email);

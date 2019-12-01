@@ -20,14 +20,7 @@
         </table>
     </div>
     <div class="layout" id="right">
-        <p>
-            Thank you for your purchase. However, since your
-            credit card info and personal data were never
-            collected, it will be difficult to bill you and send
-            you your merchandise.
-        <p>
-            Please return again when someone has completed the
-            rest of this application.
+        <p>Thank you for your purchase.</p>
     </div>
     <div class="layout" id="bottom">
 

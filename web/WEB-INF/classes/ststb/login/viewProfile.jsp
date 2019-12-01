@@ -9,10 +9,10 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Profile</title>
+        <title>View Profile</title>
     </head>
     <body>
-        <h1>Edit Profile</h1>
+        <h1>View Profile</h1>
         <h2>${helper.user.misc_error_message}</h2>
             <form method="POST" action="Controller">
                 <table>

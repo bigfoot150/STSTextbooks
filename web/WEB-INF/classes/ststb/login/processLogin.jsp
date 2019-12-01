@@ -18,7 +18,8 @@
             <input type="submit" name="viewProfileButton" value="View Profile">
             <input type="submit" name="editProfileButton" value="Edit Profile">
             <input type="submit" name="changePassword" value="Change Password">
-            <input type="submit" name="viewUserListingButton" value="View My Listings">       
+            <input type="submit" name="viewUserListingButton" value="View My Listings">   
+            <input type="submit" name="viewTransactions" value="View Transactions">
         </form> <br>
               
         <form action="Controller" method="get">
